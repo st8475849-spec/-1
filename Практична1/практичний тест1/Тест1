@@ -1,1 +1,307 @@
 
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="NUnit.Analyzers" Version="3.9.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Task1\Task1.csproj" />
+    <ProjectReference Include="..\Task2\Task2.csproj" />
+    <ProjectReference Include="..\Task3\Task3.csproj" />
+    <ProjectReference Include="..\Task4\Task4.csproj" />
+    <ProjectReference Include="..\Task5\Task5.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="NUnit.Framework" />
+  </ItemGroup>
+
+</Project>
+
+using Task5;
+
+namespace Practical1Test
+{
+    internal class Task5_StudentGroups_Tests
+    {
+
+        [Test]
+        public void GetAverage_ValidArray_ReturnsCorrectAverage()
+        {
+            int[] marks = { 80, 90, 70, 60, 100 };
+            double result = Program.GetAverage(marks);
+            Assert.AreEqual(80.0, result, 0.001);
+        }
+
+        [Test]
+        public void GetMin_ValidArray_ReturnsMinimum()
+        {
+            int[] marks = { 80, 90, 70, 60, 100 };
+            int result = Program.GetMin(marks);
+            Assert.AreEqual(60, result);
+        }
+
+        [Test]
+        public void GetMax_ValidArray_ReturnsMaximum()
+        {
+            int[] marks = { 80, 90, 70, 60, 100 };
+            int result = Program.GetMax(marks);
+            Assert.AreEqual(100, result);
+        }
+    }
+}
+
+using Task4;
+
+namespace Practical1Test
+{
+    internal class Task4_Triangle_Tests
+    {
+        [Test]
+        [TestCase(3, 4, 5, true)]
+        [TestCase(1, 1, 1, true)]
+        [TestCase(2, 2, 3, true)]
+        public void IsValidTriangle_ValidTriangles_ReturnsTrue(double a, double b, double c, bool expected)
+        {
+            bool result = Program.IsValidTriangle(a, b, c);
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        [TestCase(1, 1, 3, false)]
+        [TestCase(0, 4, 5, false)]
+        [TestCase(-1, 4, 5, false)]
+        [TestCase(1, 10, 2, false)]
+        public void IsValidTriangle_InvalidTriangles_ReturnsFalse(double a, double b, double c, bool expected)
+        {
+            bool result = Program.IsValidTriangle(a, b, c);
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void GetPerimeter_ValidTriangle_ReturnsCorrectPerimeter()
+        {
+            double result = Program.GetPerimeter(3, 4, 5);
+            Assert.AreEqual(12.0, result, 0.001);
+        }
+
+        [Test]
+        public void GetPerimeter_InvalidTriangle_ThrowsException()
+        {
+        }
+
+        [Test]
+        public void GetArea_ValidTriangle_ReturnsCorrectArea()
+        {
+            double result = Program.GetArea(3, 4, 5);
+            Assert.AreEqual(6.0, result, 0.001);
+        }
+
+        [Test]
+        public void GetArea_InvalidTriangle_ThrowsException()
+        {
+        }
+
+        [Test]
+        [TestCase(1, 1, 1, "рівносторонній")]
+        [TestCase(3, 4, 5, "прямокутний")]
+        [TestCase(2, 2, 3, "рівнобедрений")]
+        [TestCase(3, 4, 6, "довільний")]
+        public void GetTriangleType_ValidTriangles_ReturnsCorrectType(double a, double b, double c, string expected)
+        {
+            string result = Program.GetTriangleType(a, b, c);
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void GetTriangleType_InvalidTriangle_ThrowsException()
+        {
+        }
+    }
+}
+
+using Task3;
+
+namespace Practical1Test
+{
+    internal class Task3_AgeClassification_Tests
+    {
+        [Test]
+        [TestCase(-1, "Нереальний вік")]
+        [TestCase(121, "Нереальний вік")]
+        [TestCase(150, "Нереальний вік")]
+        public void ClassifyAge_UnrealAge_ReturnsUnrealAge(int age, string expected)
+        {
+            string result = Program.ClassifyAge(age);
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        [TestCase(0, "Ви дитина")]
+        [TestCase(5, "Ви дитина")]
+        [TestCase(11, "Ви дитина")]
+        public void ClassifyAge_Child_ReturnsChild(int age, string expected)
+        {
+            string result = Program.ClassifyAge(age);
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        [TestCase(12, "Підліток")]
+        [TestCase(15, "Підліток")]
+        [TestCase(17, "Підліток")]
+        public void ClassifyAge_Teenager_ReturnsTeenager(int age, string expected)
+        {
+            string result = Program.ClassifyAge(age);
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        [TestCase(18, "Дорослий")]
+        [TestCase(30, "Дорослий")]
+        [TestCase(59, "Дорослий")]
+        public void ClassifyAge_Adult_ReturnsAdult(int age, string expected)
+        {
+            string result = Program.ClassifyAge(age);
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        [TestCase(60, "Пенсіонер")]
+        [TestCase(80, "Пенсіонер")]
+        [TestCase(120, "Пенсіонер")]
+        public void ClassifyAge_Senior_ReturnsSenior(int age, string expected)
+        {
+            string result = Program.ClassifyAge(age);
+            Assert.AreEqual(expected, result);
+        }
+    }
+}
+
+using Task2;
+
+namespace Practical1Test
+{
+    internal class Task2_ArrayCalculations_Tests
+    {
+
+        [Test]
+        public void GenerateRandomArray_ValidParameters_ReturnsCorrectSize()
+        {
+            int[] result = Program.GenerateRandomArray(5, 1, 10);
+            Assert.AreEqual(5, result.Length);
+        }
+
+        [Test]
+        public void GenerateRandomArray_ValidParameters_ReturnsValuesInRange()
+        {
+            int[] result = Program.GenerateRandomArray(100, 1, 10);
+            foreach (int value in result)
+            {
+                Assert.GreaterOrEqual(value, 1);
+                Assert.LessOrEqual(value, 10);
+            }
+        }
+
+        
+
+        
+
+        [Test]
+        public void GetSum_ValidArray_ReturnsCorrectSum()
+        {
+            int[] array = { 1, 2, 3, 4, 5 };
+            int result = Program.GetSum(array);
+            Assert.AreEqual(15, result);
+        }
+
+        [Test]
+        public void GetAverage_ValidArray_ReturnsCorrectAverage()
+        {
+            int[] array = { 2, 4, 6, 8 };
+            double result = Program.GetAverage(array);
+            Assert.AreEqual(5.0, result, 0.001);
+        }
+
+        [Test]
+        public void GetMin_ValidArray_ReturnsMinimum()
+        {
+            int[] array = { 5, 2, 8, 1, 9 };
+            int result = Program.GetMin(array);
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void GetMax_ValidArray_ReturnsMaximum()
+        {
+            int[] array = { 5, 2, 8, 1, 9 };
+            int result = Program.GetMax(array);
+            Assert.AreEqual(9, result);
+        }
+    }
+}
+
+using Task1;
+
+namespace Practical1Test
+{
+    internal class Task1_EvenNumber_Tests
+    {
+
+        [Test]
+        [TestCase(2, true)]
+        [TestCase(4, true)]
+        [TestCase(0, true)]
+        [TestCase(-2, true)]
+        public void IsEven_EvenNumbers_ReturnsTrue(int number, bool expected)
+        {
+            bool result = Task1.Program.IsEven(number);
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        [TestCase(1, false)]
+        [TestCase(3, false)]
+        [TestCase(-1, false)]
+        [TestCase(-3, false)]
+        public void IsEven_OddNumbers_ReturnsFalse(int number, bool expected)
+        {
+            bool result = Task1.Program.IsEven(number);
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        [TestCase(2, "Двері відкриваються!")]
+        [TestCase(4, "Двері відкриваються!")]
+        [TestCase(0, "Двері відкриваються!")]
+        public void GetMessage_EvenNumbers_ReturnsOpenMessage(int number, string expected)
+        {
+            string result = Task1.Program.GetMessage(number);
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        [TestCase(1, "Двері зачинені...")]
+        [TestCase(3, "Двері зачинені...")]
+        [TestCase(-1, "Двері зачинені...")]
+        public void GetMessage_OddNumbers_ReturnsClosedMessage(int number, string expected)
+        {
+            string result = Task1.Program.GetMessage(number);
+            Assert.AreEqual(expected, result);
+        }
+    }
+}
